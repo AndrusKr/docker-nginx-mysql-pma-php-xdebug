@@ -1,0 +1,3 @@
+/docker/mysql/.data
+/docker/php-fpm/logs
+/docker/nginx/logs
