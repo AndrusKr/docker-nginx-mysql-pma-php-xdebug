@@ -5,7 +5,7 @@ using XDebug on PhpStorm or VSCode (as you wish:) + the latest versions of nginx
 To start using it just complete the following steps:
 1. git clone 
 2. adjust the .env file according to your needs
-3. place the PHP code you'd like to run in this template
+3. place the PHP code you'd like to run in this template (/code folder)
 4. docker-compose up --build -d
 
 Done! ;)
