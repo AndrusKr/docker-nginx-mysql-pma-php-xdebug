@@ -8,6 +8,9 @@ RUN apt-get install -y apt-utils
 RUN pecl install xdebug-2.7.0beta1 \ 
     && docker-php-ext-enable xdebug 
 
+# Docker-php-extentions install/enabled
+RUN docker-php-ext-install pdo pdo_mysql
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 && composer --version
