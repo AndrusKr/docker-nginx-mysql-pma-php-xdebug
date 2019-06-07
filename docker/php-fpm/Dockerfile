@@ -3,13 +3,24 @@ ARG TIMEZONE
 
 RUN apt-get update 
 RUN apt-get install -y apt-utils
+
+# Install XDebug
 RUN pecl install xdebug-2.7.0beta1 \ 
     && docker-php-ext-enable xdebug 
 
-ADD ./php.ini /usr/local/etc/php/
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+&& composer --version
 
-RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
+# Set Timezone
+RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone \
+&& printf '[PHP]\ndate.timezone = "%s"\n', ${TIMEZONE} > /usr/local/etc/php/conf.d/tzone.ini \
+&& "date"
 
-WORKDIR /var/www
+# Add configuration files for Php & XDebug
+COPY ./php.ini /usr/local/etc/php/php.ini
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+WORKDIR /var/www/code
 
 EXPOSE 80
